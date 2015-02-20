@@ -1,4 +1,5 @@
 package ru.ifmo;
+
 import java.io.IOException;
 import java.net.Socket;
 
@@ -12,17 +13,21 @@ public class Client {
     Client(Socket t) {
         clientThread = new ClientThread(t);
         clientThread.run();
-        //ttt
+
     }
 
     //sends message to server only ;(
-    void sendMessage(String message) {
+    public void sendMessage(String message) {
         try {
-            clientThread.outs.write(message.getBytes());
+            byte[] b = new byte[message.length() + 1];
+            b[0] = (byte) message.length();
+            for (int i = 0; i < message.length(); i++) {
+                b[i + 1] = message.getBytes()[i];
+            }
+            clientThread.outs.write(b);
+        } catch (IOException e) {
+            System.err.println("error when sending message");
         }
-        catch (IOException e){
-            System.err.println("error when sendind message");
-        }
-
     }
+
 }

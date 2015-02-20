@@ -23,8 +23,7 @@ public class ClientThread extends Thread {
 
     @Override
     public void run() {
-        //super.run();
-        //runs the client thread
+        //listens another clients
         try {
             while (true) {
                 int messageLength = is.available();
@@ -37,7 +36,7 @@ public class ClientThread extends Thread {
                 System.out.println("GOT SOME TEXT:" + text);
             }
         } catch (IOException e) {
-            System.err.println("Error ru.ifmo.ClientThread:(");
+            System.err.println("Error ClientThread:(");
         }
     }
 }
