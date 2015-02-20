@@ -8,14 +8,15 @@ import java.net.Socket;
 /**
  * Created by Freemahn on 20.02.2015.
  */
-public class ClientThread extends Thread {
+public class InpThread extends Thread {
     InputStream is;
     OutputStream outs;
 
-    ClientThread(Socket t) {
+    InpThread(Socket t) {
         try {
             is = t.getInputStream();
             outs = t.getOutputStream();
+            System.out.println("InpThread");
         } catch (IOException e) {
             System.out.println("cant initiate");
         }
@@ -27,7 +28,10 @@ public class ClientThread extends Thread {
         try {
             while (true) {
                 int messageLength = is.available();
-                if (messageLength == 0) continue;
+                if (messageLength == 0) {
+                    //Thread.sleep(1000);
+                    continue;
+                }
                 byte[] message = new byte[messageLength];
                 //first byte(n) is length
                 //other n bytes is message
